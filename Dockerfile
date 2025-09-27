@@ -1,7 +1,11 @@
 # syntax=docker/dockerfile:1
 # Initialize device type args
 # use build args in the docker build command with --build-arg="BUILDARG=true"
-ARG USE_CUDA=false
+
+# ARGO: выставляю осознанно true, поскольку подключаем GPU
+ARG USE_CUDA=true
+
+
 ARG USE_OLLAMA=false
 ARG USE_SLIM=false
 ARG USE_PERMISSION_HARDENING=false
