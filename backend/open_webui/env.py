@@ -110,9 +110,9 @@ for source in log_sources:
 
 log.setLevel(SRC_LOG_LEVELS["CONFIG"])
 
-WEBUI_NAME = os.environ.get("WEBUI_NAME", "Argo")
-if WEBUI_NAME != "Argo":
-    WEBUI_NAME += " (Argo)"
+WEBUI_NAME = os.environ.get("WEBUI_NAME", "АРГО")
+if WEBUI_NAME != "АРГО":
+    WEBUI_NAME += " (АРГО)"
 
 # ARGO: TODO: исправить openwebui url
 # в рамках https://tracker.yandex.ru/pages/projects/17
