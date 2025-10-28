@@ -10,7 +10,7 @@ ARG USE_OLLAMA=false
 ARG USE_SLIM=false
 ARG USE_PERMISSION_HARDENING=false
 # Tested with cu117 for CUDA 11 and cu121 for CUDA 12 (default)
-ARG USE_CUDA_VER=cu128
+ARG USE_CUDA_VER=cu121
 # any sentence transformer model; models to use can be found at https://huggingface.co/models?library=sentence-transformers
 # Leaderboard: https://huggingface.co/spaces/mteb/leaderboard 
 # for better performance and multilangauge support use "intfloat/multilingual-e5-large" (~2.5GB) or "intfloat/multilingual-e5-base" (~1.5GB)
@@ -136,6 +136,8 @@ RUN pip3 install --no-cache-dir uv && \
     # If you use CUDA the whisper and embedding model will be downloaded on first use
     pip3 install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/$USE_CUDA_DOCKER_VER --no-cache-dir && \
     uv venv /opt/venv && \
+    echo "Virtual environment created at /opt/venv" && \
+    ls -la /opt/venv/bin/ && \
     uv pip install -r requirements.txt --python /opt/venv/bin/python && \
     /opt/venv/bin/python -c "import uvicorn; print('uvicorn installed successfully')" && \
     /opt/venv/bin/python -c "import os; from sentence_transformers import SentenceTransformer; SentenceTransformer(os.environ['RAG_EMBEDDING_MODEL'], device='cpu')" && \
@@ -144,6 +146,8 @@ RUN pip3 install --no-cache-dir uv && \
     else \
     pip3 install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cpu --no-cache-dir && \
     uv venv /opt/venv && \
+    echo "Virtual environment created at /opt/venv" && \
+    ls -la /opt/venv/bin/ && \
     uv pip install -r requirements.txt --python /opt/venv/bin/python && \
     /opt/venv/bin/python -c "import uvicorn; print('uvicorn installed successfully')" && \
     if [ "$USE_SLIM" != "true" ]; then \
