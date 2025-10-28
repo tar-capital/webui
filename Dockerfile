@@ -129,6 +129,8 @@ RUN apt-get update && \
     && rm -rf /var/lib/apt/lists/*
 
 # install python dependencies
+RUN pip3 install --upgrade pip setuptools wheel
+RUN pip3 install --no-cache-dir uvicorn[standard]==0.35.0 fastapi==0.115.7
 COPY --chown=$UID:$GID ./backend/requirements.txt ./requirements.txt
 
 RUN pip3 install --no-cache-dir uv && \
