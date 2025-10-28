@@ -69,7 +69,15 @@ if [ -n "$SPACE_ID" ]; then
   export WEBUI_URL=${SPACE_HOST}
 fi
 
-PYTHON_CMD=$(command -v python3 || command -v python)
+# Use uv virtual environment if it exists, otherwise fallback to system python
+if [ -f "/opt/venv/bin/python" ]; then
+    PYTHON_CMD="/opt/venv/bin/python"
+    echo "Using uv virtual environment"
+else
+    PYTHON_CMD=$(command -v python3 || command -v python)
+    echo "Using system python"
+fi
+
 UVICORN_WORKERS="${UVICORN_WORKERS:-1}"
 
 # If script is called with arguments, use them; otherwise use default workers
