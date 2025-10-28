@@ -70,12 +70,17 @@ if [ -n "$SPACE_ID" ]; then
 fi
 
 # Use uv virtual environment if it exists, otherwise fallback to system python
+echo "Checking for virtual environment..."
 if [ -f "/opt/venv/bin/python" ]; then
     PYTHON_CMD="/opt/venv/bin/python"
-    echo "Using uv virtual environment"
+    echo "Using uv virtual environment: $PYTHON_CMD"
+    echo "Testing uvicorn import..."
+    $PYTHON_CMD -c "import uvicorn; print('uvicorn found in venv')" || echo "uvicorn NOT found in venv"
 else
     PYTHON_CMD=$(command -v python3 || command -v python)
-    echo "Using system python"
+    echo "Using system python: $PYTHON_CMD"
+    echo "Testing uvicorn import..."
+    $PYTHON_CMD -c "import uvicorn; print('uvicorn found in system')" || echo "uvicorn NOT found in system"
 fi
 
 UVICORN_WORKERS="${UVICORN_WORKERS:-1}"
