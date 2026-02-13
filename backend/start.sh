@@ -70,6 +70,7 @@ if [ -n "$SPACE_ID" ]; then
 fi
 
 PYTHON_CMD=$(command -v python3 || command -v python)
+
 UVICORN_WORKERS="${UVICORN_WORKERS:-1}"
 
 # If script is called with arguments, use them; otherwise use default workers
